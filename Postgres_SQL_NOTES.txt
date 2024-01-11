@@ -1,0 +1,139 @@
+dev=> select * from Test_Postgres;
+ id | username | email | number | created_on | last_login
+----+----------+-------+--------+------------+------------
+(0 rows)
+
+dev=> INSERT INTO Test_Postgres (
+dev(> username,
+dev(> email,
+dev(> number
+dev(> )
+dev-> VALUES
+dev-> ('rakesh','rakeshc@hydropoint.com',45678);
+ERROR:  null value in column "created_on" violates not-null constraint
+DETAIL:  Failing row contains (1, rakesh, rakeshc@hydropoint.com, 45678, null, null).
+dev=> INSERT INTO Test_Postgres (
+dev(> username,
+dev(> email,
+dev(> number,
+dev(> created_on
+dev(> )
+dev-> VALUES
+dev-> ('rakesh','rakeshc@hydropoint.com',45678,'2023-11-03 20:26:00');
+INSERT 0 1
+dev=> select * from Test_Postgres;
+ id | username |         email          | number |     created_on      | last_login
+----+----------+------------------------+--------+---------------------+------------
+  2 | rakesh   | rakeshc@hydropoint.com |  45678 | 2023-11-03 20:26:00 |
+(1 row)
+
+dev=>
+
+
+get schemas:
+SELECT nspname FROM pg_catalog.pg_namespace;
+
+
+df.to_sql(full_table_name, conn, if_exists='append', index=False)
+
+
+data_list = data_dict.get("data", [])
+
+# Extract all unique column names and their data types
+column_data_types = {}
+for record in data_list:
+    for key, value in record.items():
+        if key not in column_data_types:
+            column_data_types[key] = type(value).__name__
+
+# Create a DataFrame from the list of dictionaries
+df = pd.DataFrame(data_list)
+?limit=10&offset=100
+
+
+[10 rows x 19 columns]
+c:/Users/Welcome/OneDrive - Hydropoint Data Systems/Research/Python/Netsuite_POC/Netsuite_Account.py:90: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df.to_sql(full_table_name, postgres_connection.conn, if_exists='append', index=False)
+Traceback (most recent call last):
+  File "c:/Users/Welcome/OneDrive - Hydropoint Data Systems/Research/Python/Netsuite_POC/Netsuite_Account.py", line 90, in <module> 
+    df.to_sql(full_table_name, postgres_connection.conn, if_exists='append', index=False)
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\core\generic.py", line 2878, in to_sql     
+    return sql.to_sql(
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\io\sql.py", line 769, in to_sql
+    return pandas_sql.to_sql(
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\io\sql.py", line 2378, in to_sql
+    table.create()
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\io\sql.py", line 903, in create
+    if self.exists():
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\io\sql.py", line 889, in exists
+    return self.pd_sql.has_table(self.name, self.schema)
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\io\sql.py", line 2385, in has_table        
+    return len(self.execute(query, [name]).fetchall()) > 0
+  File "C:\Users\Welcome\AppData\Local\Programs\Python\Python38\lib\site-packages\pandas\io\sql.py", line 2200, in execute
+    cur = self.con.cursor()
+psycopg2.InterfaceError: connection already closed
+
+
+
+# Replace with your PostgreSQL connection details
+database_uri = "postgresql://rakeshc:Welcome#123@192.168.242.163:5439/dev"
+
+engine = create_engine(database_uri)
+
+
+engine = create_engine('postgresql+psycopg2://rakeshc:Welcome#123\@192.168.242.163/dev')
+
+INSERT INTO netsuite.account (accountsearchdisplaynamecopy, acctnumber, accttype, balance, description, displaynamewithhierarchy, externalid, fullname, id, includechildren, inventory, isinactive, issummary, lastmodifieddate, reconcilewithmatching, revalue, subsidiary, status, username) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+['10000 Cash Rollup', 'Cash Rollup', '10000', 'Bank', '0', 'Cash Rollup', '10000 Cash Rollup', '10000', 'Cash Rollup', '240', 'F', 'F', 'T', 'T', '8/25/2015', 'F', 'T', '1', nan, 'Active', 'ETL']
+
+
+ALTER TABLE netsuite.customer ALTER COLUMN custentity_cust_syncocode_mcd TYPE VARCHAR(50);
+
+VARCHAR(100)
+ALTER TABLE netsuite.customer ADD custentity_ar_follow_up_date TIMESTAMP;
+username
+custentity_wt_user
+ALTER TABLE netsuite.customer ALTER COLUMN sourcewebsite TYPE VARCHAR(100);
+SET DEFAULT 0;
+
+
+ALTER TABLE netsuite.customer ADD custentitycustomer_account_site_id BIGINT;
+delete FROM netsuite.contact ORDER BY created_date DESC LIMIT 231;
+
+DELETE FROM netsuite.customer
+WHERE id IN (
+    SELECT id
+    FROM netsuite.customer
+    ORDER BY id DESC
+    LIMIT 408
+);
+
+
+SELECT column_name, data_type,character_maximum_length FROM information_schema.columns WHERE table_name ='customer';
+SELECT column_name, data_type FROM information_schema.columns WHERE table_name 
+
+total_records = 82000
+limit = 1000
+
+for offset in range(0, total_records, limit):
+    params["q"] = f"SELECT * FROM YourRecordType ORDER BY yourOrderByClause LIMIT {limit} OFFSET {offset}"
+    response = requests.get(url, headers=headers, params=params)
+    data = response.json()
+    # Process the data as needed
+
+CREATE UNIQUE CONSTRAINT my_unique_constraint ON netsuite.account (id);
+
+ALTER TABLE netsuite.contact ADD CONSTRAINT id_account_unique UNIQUE (id);
+
+
+SELECT count(*) FROM transactionLine tl JOIN transaction t ON t.id = tl.transaction WHERE t.recordtype='invoice' AND t.lastmodifieddate <= TO_DATE('2019-01-01','YYYY-MM-DD') AND tl.donotdisplayline != 'T'
+
+
+
+DESCRIBE customer
+select top 5 accountnumber from customer where accountnumber is not null
+
+
+COPY schema.table
+FROM 's3://your-s3-bucket/your-s3-prefix'
+IAM_ROLE 'arn:aws:iam::your-account-id:role/your-iam-role'
